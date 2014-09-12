@@ -13,7 +13,7 @@ using Vagrant. Includes 1 monitoring server and 2 clients.
 To initialize the test bed:
 
 - Clone to local disk. `git clone https://github.com/666jfox777/vagrant-sensu.git`
-- Browse to folder.
+- Browse to folder. `cd ~/vagrant-sensu/
 - `vagrant up`
 
 When you're done:
@@ -44,3 +44,9 @@ To generate an alert:
 Wait a few minutes and you will see an alert displayed in the Sensu dashboard.
 If you chose to configure the Vagrantfile with a valid email address you should
 receive an email notification as well.
+
+### Screenshots!
+
+![Sensu Uchiwa Dashboard Events](screenshot-1.png?raw=true "Sensu Uchiwa Dashboard Events")
+![Sensu Uchiwa Dashboard Clients](screenshot-2.png?raw=true "Sensu Uchiwa Dashboard Clients")
+![Sensu Uchiwa Dashboard Client Expanded](screenshot-2.png?raw=true "Sensu Uchiwa Dashboard Client Expanded")
