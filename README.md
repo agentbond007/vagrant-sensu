@@ -45,7 +45,10 @@ Wait a few minutes and you will see an alert displayed in the Sensu dashboard.
 If you chose to configure the Vagrantfile with a valid email address you should
 receive an email notification as well.
 
-### Screenshots!
+### Screenshots
+
+These screenshots are of the Sensu Uchiwa dashboard, after the environment has
+been `vagrant up`'d and `sudo service crond stop` has been run on one host.
 
 ![Sensu Uchiwa Dashboard Events](screenshot-1.png?raw=true "Sensu Uchiwa Dashboard Events")
 ![Sensu Uchiwa Dashboard Clients](screenshot-2.png?raw=true "Sensu Uchiwa Dashboard Clients")
