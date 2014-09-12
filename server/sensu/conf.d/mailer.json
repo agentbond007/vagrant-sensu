@@ -1,0 +1,10 @@
+{
+  "mailer": {
+    "admin_gui": "http://sensu:3000/",
+    "mail_from": "mailfrom",
+    "mail_to": "mailto",
+    "smtp_address": "smtpaddr",
+    "smtp_port": "smtpport",
+    "smtp_domain": "smtpdomain"
+  }
+}

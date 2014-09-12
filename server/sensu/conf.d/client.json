@@ -1,0 +1,7 @@
+{
+  "client": {
+    "name": "clientname",
+    "address": "ipaddr",
+    "subscriptions": [ "all" ]
+  }
+}
