@@ -16,6 +16,8 @@ To initialize the test bed:
 - Browse to folder. `cd ~/vagrant-sensu/
 - `vagrant up`
 
+To view the dashboard: `http://localhost:3000/#/events`
+
 When you're done:
 
 - `vagrant destroy`
