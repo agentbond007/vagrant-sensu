@@ -10,6 +10,7 @@ mailto = "email@#{domain}"
 smtpaddr = "localhost"
 smtpport = "25"
 smtpdomain = "#{domain}"
+clients = 2
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
@@ -64,38 +65,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     sensu.vm.provision "shell", inline: "service uchiwa start"
   end
 
-  config.vm.define "client1" do |client|
-    client.vm.host_name = "client1"
-    client.vm.network "private_network", ip: "192.168.250.101"
-    client.vm.provision "shell", inline: "sudo bash"
-    client.vm.provision "shell", inline: "service iptables stop"
-    client.vm.provision "shell", inline: "cp -f /vagrant/client/sensu.repo /etc/yum.repos.d/"
-    client.vm.provision "shell", inline: "yum install sensu -y"
-    client.vm.provision "shell", inline: "yum remove ruby -y"
-    client.vm.provision "shell", inline: "echo 'EMBEDDED_RUBY=true' > /etc/default/sensu"
-    client.vm.provision "shell", inline: "ln -s /opt/sensu/embedded/bin/ruby /usr/bin/"
-    client.vm.provision "shell", inline: "cp -rf /vagrant/client/sensu/* /etc/sensu/"
-    client.vm.provision "shell", inline: "sed -i 's/clientname/client.1.#{domain}/g' /etc/sensu/conf.d/client.json"
-    client.vm.provision "shell", inline: "sed -i 's/ipaddr/192.168.250.101/g' /etc/sensu/conf.d/client.json"
-    client.vm.provision "shell", inline: "chkconfig sensu-client on"
-    client.vm.provision "shell", inline: "service sensu-client start"
-  end
-
-  config.vm.define "client2" do |client|
-    client.vm.host_name = "client2"
-    client.vm.network "private_network", ip: "192.168.250.102"
-    client.vm.provision "shell", inline: "sudo bash"
-    client.vm.provision "shell", inline: "service iptables stop"
-    client.vm.provision "shell", inline: "cp -f /vagrant/client/sensu.repo /etc/yum.repos.d/"
-    client.vm.provision "shell", inline: "yum install sensu -y"
-    client.vm.provision "shell", inline: "yum remove ruby -y"
-    client.vm.provision "shell", inline: "echo 'EMBEDDED_RUBY=true' > /etc/default/sensu"
-    client.vm.provision "shell", inline: "ln -s /opt/sensu/embedded/bin/ruby /usr/bin/"
-    client.vm.provision "shell", inline: "cp -rf /vagrant/client/sensu/* /etc/sensu/"
-    client.vm.provision "shell", inline: "sed -i 's/clientname/client.2.#{domain}/g' /etc/sensu/conf.d/client.json"
-    client.vm.provision "shell", inline: "sed -i 's/ipaddr/192.168.250.102/g' /etc/sensu/conf.d/client.json"
-    client.vm.provision "shell", inline: "chkconfig sensu-client on"
-    client.vm.provision "shell", inline: "service sensu-client start"
+  for i in 1..clients
+    config.vm.define "client#{i}" do |client|
+      client.vm.host_name = "client#{i}"
+      client.vm.network "private_network", ip: "192.168.250.10#{i}"
+      client.vm.provision "shell", inline: "sudo bash"
+      client.vm.provision "shell", inline: "service iptables stop"
+      client.vm.provision "shell", inline: "cp -f /vagrant/client/sensu.repo /etc/yum.repos.d/"
+      client.vm.provision "shell", inline: "yum install sensu -y"
+      client.vm.provision "shell", inline: "yum remove ruby -y"
+      client.vm.provision "shell", inline: "echo 'EMBEDDED_RUBY=true' > /etc/default/sensu"
+      client.vm.provision "shell", inline: "ln -s /opt/sensu/embedded/bin/ruby /usr/bin/"
+      client.vm.provision "shell", inline: "cp -rf /vagrant/client/sensu/* /etc/sensu/"
+      client.vm.provision "shell", inline: "sed -i 's/clientname/client.#{i}.#{domain}/g' /etc/sensu/conf.d/client.json"
+      client.vm.provision "shell", inline: "sed -i 's/ipaddr/192.168.250.10#{i}/g' /etc/sensu/conf.d/client.json"
+      client.vm.provision "shell", inline: "chkconfig sensu-client on"
+      client.vm.provision "shell", inline: "service sensu-client start"
+    end
   end
 
 end
